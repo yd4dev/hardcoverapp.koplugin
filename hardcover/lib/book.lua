@@ -30,8 +30,11 @@ function Book:parseIdentifiers(identifiers)
   end
 
   for line in string.lower(identifiers):gmatch("%s*([^%s]+)%s*") do
-    -- check for hardcover: and hardcover-edition:
+    -- check for hardcover:, hardcover-slug: and hardcover-edition:
     local hc = string.match(line, "hardcover:([%w_-]+)")
+    if not hc then
+        hc = string.match(line, "hardcover%-slug:([%w_-]+)")
+    end
     if hc then
       result.book_slug = hc
     end
